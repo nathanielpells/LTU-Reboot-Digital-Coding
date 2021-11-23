@@ -6,7 +6,7 @@ console.log('Hello');
 Multi line comment
 --------*/
 
-let productName = 'nathaniel';
+let productName = 'ball';
 let price = '10.00';
 let quantity = 3;
 let inStock = true;
@@ -162,3 +162,45 @@ console.log(sum5);
 console.log(sum6);
 console.log(sum7);
 console.log(sum8);
+
+
+
+let arrProductData = [
+    productName,
+    price,
+    quantity,
+    inStock,
+    discountAmount,
+];
+
+console.log(arrProductData);
+console.log(arrProductData[0]);
+console.log(arrProductData[4]);
+
+let objProductData = {
+    'productName':productName,
+    'price':price,
+    'quantity':quantity,
+    'inStock':inStock,
+    'discountAmount':discountAmount,
+};
+console.log(objProductData.productName);
+objProductData['productName'] = 'light bulbs';
+console.log(objProductData.productName);
+
+objProductData.nathanielExample1 = 'this is new data'
+objProductData['nathanielExample2'] = 'wahoo';
+console.log(objProductData);
+
+
+function outputTimesTable(number){
+    for(counter=1;counter<=12;counter++){
+        let sum = counter * number;
+        let strMessage = counter + '*' + number + '=' + sum;
+        console.log(strMessage)
+    }
+}
+
+for(multiplyer=1;multiplyer<=12;multiplyer++){
+    outputTimesTable(multiplyer);
+} 
