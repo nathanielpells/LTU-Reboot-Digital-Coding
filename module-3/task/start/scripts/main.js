@@ -204,3 +204,100 @@ function outputTimesTable(number){
 for(multiplyer=1;multiplyer<=12;multiplyer++){
     outputTimesTable(multiplyer);
 } 
+console.log(shoppingCart);
+
+
+let objCoupon1 = {
+    types:['toiletries' ,'condiments'],
+    type: 'flatFee',
+    amount:0.5,
+
+};
+
+let objCoupon2 = {
+    types:['canned', 'snacks'],
+    type:'percentage',
+    amount:30.
+};
+
+let objCoupon3 = {
+    types:[''],
+    type:'basketTotal',
+    amount:25,
+};
+
+let objCoupon4 = {
+    types:[''],
+    type:'basketPercent',
+    amount:40,
+};
+
+
+
+function totalPriceOfShopping(shoppingCart,objCoupon=null){
+    //LOOP through each item of the array
+    let totalPrice = 0;
+    for(arrayKey = 0; arrayKey < shoppingCart.length; arrayKey++){
+        let currentItem = shoppingCart[arrayKey];       
+        //get the price of the current item and * it by the quantity
+        let currentItemPrice = currentItem.quantity * currentItem.price;
+        //if there is a coupon apply a discount to the current item
+        let discount = 0;
+        //if objcoupon has been passed as an argument and the type is not one that affects the total price
+        if(objCoupon && objCoupon.type != 'basketTotal' &&objCoupon.type !='basketPercent'){
+            //if the current item type can be found in the array for types of items to be discounted
+            if(objCoupon.types.includes(currentItem.type)){
+                //switch statement for type of coupon
+                switch(objCoupon.type){
+                    case'flatFee':
+                    //work out the total discount based on amount time quantity
+                        discount = objCoupon.amount * currentItem.quantity
+                        //remove the discounted amount from the current item price
+                        currentItemPrice = currentItemPrice - discount;
+                        break;
+                    case 'percentage':
+                        //work out the total percentage to be removed
+                        discount = (currentItemPrice / 100) * objCoupon.amount;
+                        //remove the discounted amount from the current item price
+                        currentItemPrice = currentItemPrice - discount;
+                        break;
+
+                }
+            }
+        }
+        
+        totalPrice +=currentItemPrice;
+    }
+    //if the coupon type is to affect the whole basket
+    if(objCoupon && (objCoupon.type == 'basketTotal' || objCoupon.type == 'basketPercent')){
+        //switch statement for type of coupon
+        switch(objCoupon.type){
+            case 'basketTotal':
+            //  take the amount off the total price
+            totalPrice = totalPrice - objCoupon.amount;
+            break;
+            case 'basketPercent':
+                //work out the total percentage to be removed
+                discount = (totalPrice / 100) * objCoupon.amount;
+                totalPrice = totalPrice - discount;
+                break;
+
+        }   
+    }
+    //return total price
+    return totalPrice.toFixed(2);
+}
+
+let shoppingCartPrice = totalPriceOfShopping(shoppingCart);
+console.log(shoppingCartPrice);
+shoppingCartPrice = totalPriceOfShopping(shoppingCart, objCoupon1);
+console.log(shoppingCartPrice);
+shoppingCartPrice = totalPriceOfShopping(shoppingCart, objCoupon2);
+console.log(shoppingCartPrice);
+shoppingCartPrice = totalPriceOfShopping(shoppingCart, objCoupon3);
+console.log(shoppingCartPrice);
+shoppingCartPrice = totalPriceOfShopping(shoppingCart, objCoupon4);
+console.log(shoppingCartPrice);
+
+
+
